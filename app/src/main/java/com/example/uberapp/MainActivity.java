@@ -3,6 +3,7 @@ package com.example.uberapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.solver.state.State;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                              user.saveInBackground(new SaveCallback() {
                                  @Override
                                  public void done(ParseException e) {
-                                     // napraj tranzicija do passengerActivity i driverRequest
+                                     transitionToPassenger();
                                  }
                              });
                          }
@@ -67,8 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         ParseInstallation.getCurrentInstallation().saveInBackground();
         if(ParseUser.getCurrentUser() !=null){
-            //transition
-
+            transitionToPassenger();
         }
 
         btnSignUpLogin = findViewById(R.id.btnSignUpLogin);
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         public void done(ParseException e) {
                             if (e == null) {
                                 Toast.makeText(MainActivity.this, "Signed up!", Toast.LENGTH_SHORT).show();
-                                // tranzicija do passenger activity i requestList
+                                transitionToPassenger();
                             }
                         }
                     });
@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             if(user != null && e == null) {
                                 Toast.makeText(MainActivity.this, "User Logged in",  Toast.LENGTH_SHORT).show();
+                                transitionToPassenger();
                             }
                         }
                     });
@@ -162,5 +163,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void transitionToPassenger(){
+        if (ParseUser.getCurrentUser() != null )
+        {
+            if (ParseUser.getCurrentUser().get("as").equals("Passenger")) {
+                Intent intent = new Intent(MainActivity.this, Passenger.class);
+                startActivity(intent);
+            }
+        }
+    }
 
 }
