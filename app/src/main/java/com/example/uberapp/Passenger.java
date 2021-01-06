@@ -172,7 +172,7 @@ public class Passenger extends FragmentActivity implements OnMapReadyCallback, V
 
                     ParseObject requestCar = new ParseObject("RequestCar");
                     requestCar.put("username", ParseUser.getCurrentUser().getUsername());
-
+//
                     ParseGeoPoint userLocation = new ParseGeoPoint(passengerCurrentLocation.getLatitude(), passengerCurrentLocation.getLongitude());
                     requestCar.put("passengerLocation", userLocation);
 
